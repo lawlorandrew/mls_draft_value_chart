@@ -37,17 +37,25 @@ print(polyfit_model[4] + polyfit_model[31])
 print(polyfit_model[30] + 125000)
 fig, ax = plt.subplots()
 ax.scatter(trade_dollars_df['Pick'], trade_dollars_df['$'] / 100000)
-ax.plot(xvals, polyfit_model / 100000, label='Trade Value')
+ax.plot(xvals, polyfit_model / 100000, label='Pick Value Based on Trades')
 pv_df = pd.read_csv('./output/pick_values.csv')
-ax.plot(pv_df['Pick'], pv_df['Value']*polyfit_model[0]/(pv_df['Value'][0] * 100000), color='black', label='Pick Value')
+ax.plot(pv_df['Pick'], pv_df['Value']*polyfit_model[0]/(pv_df['Value'][0] * 100000), color='black', label='Pick Value Based on Minutes Played, Converted to Allocation Money')
 ax.set_ylabel('Allocation Money (in $100k increments)')
 ax.set_xlabel('Pick')
-ax.legend()
+ax.legend(fontsize=8)
 ax.set_title('MLS Draft Pick Trade Value')
+fig.text(
+  s='By Andrew Lawlor',
+  fontsize=6,
+  x=0.99,
+  y=0.01,
+  ha='right',
+  va='bottom'
+)
 plt.savefig('./output/trade dollars.png')
 
-pv_df['Allocation Money Value'] = pv_df['Value']*polyfit_model[2]/pv_df['Value'][2]
-print(pv_df[['Pick', 'Value', 'Allocation Money Value']])
+pv_df['Allocation Money Value'] = pv_df['Value']*polyfit_model[0]/pv_df['Value'][0]
+pv_df[['Pick', 'PctValue', 'Allocation Money Value']].to_csv('./output/allocation money values.csv', index=False)
 
 def get_value(pick, pv_df):
   return pv_df['Allocation Money Value'][pick - 1]

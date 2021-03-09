@@ -134,6 +134,14 @@ sns.barplot(ax=ax, x=draft_team_df.index, y=draft_team_df['Value_Over_Expected']
 ax.set_xticklabels(draft_team_df.index, rotation=90, fontsize=6)
 ax.set_ylabel('Avg. Draft Pick Efficiency')
 ax.set_title('MLS Draft Efficiency By Team')
+fig.text(
+  s='By Andrew Lawlor',
+  fontsize=6,
+  x=0.99,
+  y=0.01,
+  ha='right',
+  va='bottom'
+)
 plt.savefig('./output/Draft Teams.png')
 # print(draft_team_df.sum())
 
