@@ -77,6 +77,14 @@ ax.plot(pick_value_df['Pick'], pick_value_df['PctValue'])
 ax.set_ylabel('Pick Value (as percentage of top pick)')
 ax.set_xlabel('Pick')
 ax.set_title('MLS Draft Pick Values based on Minutes Played in First Two Seasons')
+fig.text(
+  s='By Andrew Lawlor',
+  fontsize=6,
+  x=0.99,
+  y=0.01,
+  ha='right',
+  va='bottom'
+)
 plt.savefig(f'./output/{VALUATION_METRIC} values.png')
 
 first_season_draft_stats_df['MLS team'] = first_season_draft_stats_df['MLS team'].str.split('[').str[0].str.strip()
@@ -144,57 +152,3 @@ fig.text(
 )
 plt.savefig('./output/Draft Teams.png')
 # print(draft_team_df.sum())
-
-
-# salary_df['Last Name'] = salary_df['Last Name'].fillna('')
-# salary_df['First Name'] = salary_df['First Name'].fillna('')
-# salary_df['Name'] = salary_df['First Name'] + ' ' + salary_df['Last Name']
-# salary_df['Name'] = salary_df['Name'].astype(str).str.strip()
-# salary_df['Name'] = salary_df['Name'].apply(lambda x: unidecode.unidecode(x))
-# salary_df['year'] = 2019
-# print(salary_df[salary_df['First Name'] == 'PC']['Name'])
-# salary_stats_df = pd.merge(salary_df, stats_df, left_on=['Name', 'year'], right_on=['PlayerName', 'year'])
-# print(salary_stats_df.head())
-# salary_stats_df['Salary'] = salary_stats_df['CY Salary (Annual)'].str.strip().str[1:-1].str.replace(',','').astype(float)
-# print(salary_stats_df['Salary'])
-
-# stats_2019 = stats_df[stats_df['year'] == 2019]
-# nonmatching = stats_2019[~stats_2019['PlayerName'].isin(salary_stats_df['PlayerName'])]
-# print(nonmatching.shape)
-# nonmatching[['PlayerName']].to_csv('./nonmatching.csv')
-
-# fig, ax = plt.subplots()
-# log_df = np.log(salary_stats_df[VALUATION_METRIC])
-# log_df[log_df < 0] = 0
-# print(log_df)
-# m, b = np.polyfit(salary_stats_df['Salary'], salary_stats_df[VALUATION_METRIC], 1)
-# linear_model = m * salary_stats_df['Salary'] + b
-# polyfit_coefs = np.polyfit(salary_stats_df['Salary'], log_df, 1)
-# # print(polyfit_coefs)
-# polyfit_model = np.exp(polyfit_coefs[1]) * np.exp(polyfit_coefs[0] * salary_stats_df['Salary'])
-# # print(polyfit_model)
-# # ax.plot(salary_stats_df['Pick'], polyfit)
-# print(bf_params)
-# print(polyfit_model)
-# print(polyfit_coefs)
-
-# salary_stats_df['Curve_Fit'] = bf_params[0]*np.exp(-bf_params[1]*salary_stats_df['Salary'])+bf_params[2]
-# salary_stats_df['Polyfit'] = polyfit_model
-# salary_stats_df['Linear_Fit'] = linear_model
-# salary_stats_df.to_csv('./salary_values.csv', index=False)
-# print(salary_stats_df)
-# rmsCurve = mean_squared_error(salary_stats_df[VALUATION_METRIC], salary_stats_df['Curve_Fit'], squared=False)
-# rmsPolyfit = mean_squared_error(salary_stats_df[VALUATION_METRIC], salary_stats_df['Polyfit'], squared=False)
-# print('CURVE RMSE: ', rmsCurve)
-# print('POLYFIT RMSE: ', rmsPolyfit)
-# ax.scatter(x=salary_stats_df['Salary'], y=salary_stats_df[VALUATION_METRIC])
-# # ax.plot(salary_stats_df['Salary'], salary_stats_df['Polyfit'], color='black', label='Polyfit')
-# # ax.plot(salary_stats_df['Salary'], salary_stats_df['Curve_Fit'], label='Curve Fit')
-# x = np.linspace(0,10000000,1)
-# ax.plot(x, m*x+b, label='Linear Fit', color='red')
-# ax.legend()
-# # ax.set_xscale('log')
-# plt.savefig(f'./output/Salary values.png')
-
-# print(first_pick[VALUATION_METRIC]/2)
-# print((first_pick[VALUATION_METRIC]/2 - b)/m)
